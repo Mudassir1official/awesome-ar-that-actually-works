@@ -1,18 +1,39 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>AR.js Demo</title>
-    </head>
-    <body>
-        <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-        <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.js"></script>
-        <a-scene embedded arjs>
-            <a-marker type="pattern" preset="ar_fixed.patt">
-                <a-box position="0 0.5 0" material="color: red;"></a-box>
-            </a-marker>
-            <a-entity camera></a-entity>
-        </a-scene>
-    </body>
-    </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AR.js Demo</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+</head>
+<body style="margin: 0; overflow: hidden;">
+  
+  <!-- YouTube iframe (outside scene) -->
+  <div id="yt-video" style="position:absolute; top:10px; left:10px; display:none; z-index: 999;">
+    <iframe width="560" height="315" 
+      src="https://www.youtube.com/embed/UzyTh7yUOls?autoplay=1&mute=1" 
+      title="YouTube video player" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+    </iframe>
+  </div>
+
+  <a-scene embedded arjs>
+    <a-marker type="pattern" url="ar_fixed.patt">
+      <a-box position="0 0.5 0" material="color: red;"></a-box>
+    </a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
+
+  <script>
+    // Show YouTube video when marker is detected
+    const marker = document.querySelector('a-marker');
+    marker.addEventListener('markerFound', () => {
+      document.getElementById('yt-video').style.display = 'block';
+    });
+    marker.addEventListener('markerLost', () => {
+      document.getElementById('yt-video').style.display = 'none';
+    });
+  </script>
+
+</body>
+</html>
